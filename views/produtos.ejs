@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= titulo %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        .product-image-gallery {
+            transition: transform 0.3s ease;
+        }
+        .product-image-gallery:hover {
+            transform: scale(1.02);
+        }
+     
+        /* Image Block Styles */
+        .image-block {
+            transition: all 0.3s ease;
+        }
+        
+        .image-block:hover {
+            transform: translateY(-2px);
+        }
+        
+        .image-block.active {
+            border: 2px solid #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="bg-white shadow">
+		<div class="max-w-7xl mx-auto px-4">
+			<div class="flex justify-between items-center py-3">
+				<div class="flex items-center space-x-2">
+					<a href="/"><img src="./../../img/logo.png" alt="Logo" class="h-10"></a>
+				</div>
+				<%- include('./partials/topo.ejs') %>
+			</div>
+			<%- include('./partials/menu.ejs') %>
+	</header>
+
+    <!-- Breadcrumb -->
+    <section class="bg-gray-100 py-4">
+        <div class="container mx-auto px-4">
+            
+        </div>
+    </section>
+
+    <!-- Product Details Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Product Images Carousel -->
+                <div class="space-y-4">
+                    <!-- Main Carousel -->
+                            
+                            <!-- Main Image -->
+                    <div class="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                        <img id="main-image" src="../img/produtos/<%= imagem_principal %>" 
+                             alt="Caneca Sublimação Alça Laranja" 
+                             class="w-full h-[400px] object-contain product-image-gallery">
+                    </div>
+                    
+                    <!-- Image Blocks -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <% imagens.forEach(img=> { %>
+                        <div class="image-block bg-gray-100 rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow" 
+                             onclick="changeMainImage('../img/produtos/<%= img.imagem %>', this)">
+                            <img src="../img/produtos/<%= img.imagem %>" 
+                                 alt="Vista Principal" 
+                                 class="w-full h-32 object-contain p-2">
+                            <div class="bg-white p-2 text-center">
+                                <!--<span class="text-sm font-medium text-gray-700">Vista Principal</span>-->
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                    
+                </div>
+
+
+                <!-- Product Information -->
+                <div class="space-y-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2"><%= titulo %></h1>
+                       
+                    </div>
+
+                    <!-- Price -->
+                    <div class="border-t border-b py-4">
+                        <div class="flex items-center space-x-4">
+                             <span class="text-3xl font-bold text-green-600">R$ <%= valor %></span>
+                        </div>
+                        
+                    </div>
+
+                    <!-- Product Description -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Descrição do Produto</h3>
+                        <div class="text-gray-700 space-y-3">
+                            <p><%= descricao %></p>
+                        </div>
+                    </div>
+
+                
+
+                    <!-- Quantity and Add to Cart -->
+                    <div class="border-t pt-6">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <label class="text-gray-700 font-medium">Quantidade:</label>
+                            <div class="flex items-center border rounded-lg">
+                                <button class="px-3 py-2 text-gray-600 hover:bg-gray-100" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" class="w-16 text-center py-2 border-0 focus:ring-0">
+                                <button class="px-3 py-2 text-gray-600 hover:bg-gray-100" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <!--<span class="text-sm text-gray-600">Estoque: 125 unidades</span>-->
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!--<button class="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition font-medium">
+                                <i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho
+                            </button>-->
+                            <button class="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition font-medium" id="btnComprar">
+                                <i class="fas fa-credit-card mr-2"></i>Comprar Agora
+                            </button>
+                        </div>
+                    </div>
+
+                  
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">PersonalizArts</h3>
+                    <p class="text-gray-400">Especialistas em sublimação com mais de 5.000 produtos para seus projetos.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Atendimento</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i>(11) 9999-9999</li>
+                        <li><i class="fas fa-envelope mr-2"></i>contato@personalizarts.com</li>
+                        <li><i class="fas fa-clock mr-2"></i>Segunda a Sexta: 8h às 18h</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Links Úteis</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Minha Conta</a></li>
+                        <li><a href="#" class="hover:text-white">Rastreamento</a></li>
+                        <li><a href="#" class="hover:text-white">Política de Troca</a></li>
+                        <li><a href="#" class="hover:text-white">Suporte Técnico</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Redes Sociais</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-400"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 PersonalizArts. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        document.getElementById("btnComprar").addEventListener("click", function() {
+			//alert("Botão clicado!");
+            const qtde = document.getElementById('quantity')
+            window.location = "/checkout/<%= id_produto %>/"+qtde.value
+
+		});
+       
+
+// Image block functionality
+        function changeMainImage(imageSrc, clickedBlock) {
+            // Update main image
+            document.getElementById('main-image').src = imageSrc;
+            
+            // Remove active class from all blocks
+            document.querySelectorAll('.image-block').forEach(block => {
+                block.classList.remove('active');
+            });
+            
+            // Add active class to clicked block
+            clickedBlock.classList.add('active');
+        }
+
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show current slide
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Event listeners for navigation
+        document.querySelector('.carousel-next').addEventListener('click', nextSlide);
+        document.querySelector('.carousel-prev').addEventListener('click', prevSlide);
+
+        // Event listeners for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Auto-advance carousel (optional)
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+
+        // Quantity controls
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                const icon = this.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.className = 'fas fa-bars';
+                } else {
+                    icon.className = 'fas fa-times';
+                }
+            });
+        }
+
+        // Cart functionality
+        document.querySelectorAll('.fa-cart-plus').forEach(button => {
+            button.addEventListener('click', function() {
+                // Simple animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+                
+                // Update cart count
+                const cartCount = document.querySelector('.fa-shopping-cart + span');
+                if (cartCount) {
+                    const currentCount = parseInt(cartCount.textContent);
+                    cartCount.textContent = currentCount + 1;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

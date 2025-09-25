@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PersonalizArts - Produtos para Sublimação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="bg-white shadow">
+		<div class="max-w-7xl mx-auto px-4">
+			<div class="flex justify-between items-center py-3">
+				<div class="flex items-center space-x-2">
+					<img src="./../../img/logo.png" alt="Logo" class="h-10">
+				</div>
+				<%- include('./partials/topo.ejs') %>
+			</div>
+			<%- include('./partials/menu.ejs') %>
+	</header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative py-07 overflow-hidden">
+        <!-- Background Banner -->
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+             style="background-image: url('./img/hero-banner-sublimation.png');">
+        </div>
+        
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-4">
+            <div class="text-center text-white">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    Equipamentos para<br>
+                    <span class="text-yellow-400">Sublimação Profissional</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+                    Mais de 5.000 produtos com qualidade garantida
+                </p>
+                
+
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Featured Products -->
+    <section id="featured" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Destaques</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <% produtos.forEach(prods=> { %>
+                <a href="/produto/<%= prods.id %>">
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer flex flex-col" style="min-height: 345px;">
+                        <img src="./img/produtos/<%= prods.imagem %>" alt="" class="w-full h-48 object-cover">
+                        <div class="flex flex-col justify-between flex-1 p-4">
+                            <h3 class="font-semibold text-gray-800 mb-4"><%= prods.titulo %></h3>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-bold text-green-600">R$ <%= prods.valor %></span>
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" onclick="event.stopPropagation();">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Section -->
+    <section class="py-8 relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+             style="background-image: url('pGnTljO0c39tVbVaRLpPc');">
+        </div>
+        
+        <!-- Overlay for better text readability -->
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-white">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4">CANECAS BRANCAS</h3>
+                    <p class="text-lg">Melhor qualidade do mercado</p>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4">CHINELOS</h3>
+                    <p class="text-lg">Para sublimação profissional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">PersonalizArts</h3>
+                    <p class="text-gray-400">Especialistas em sublimação com mais de 5.000 produtos para seus projetos.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Atendimento</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i>(11) 9999-9999</li>
+                        <li><i class="fas fa-envelope mr-2"></i>contato@personalizarts.com</li>
+                        <li><i class="fas fa-clock mr-2"></i>Segunda a Sexta: 8h às 18h</li>
+                    </ul>
+                </div>
+                <!--<div>
+                    <h4 class="text-lg font-semibold mb-4">Links Úteis</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Minha Conta</a></li>
+                        <li><a href="#" class="hover:text-white">Rastreamento</a></li>
+                        <li><a href="#" class="hover:text-white">Política de Troca</a></li>
+                        <li><a href="#" class="hover:text-white">Suporte Técnico</a></li>
+                    </ul>
+                </div>-->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Redes Sociais</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-pink-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-400"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 PersonalizArts. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple cart functionality
+        let cart = [];
+        
+        document.querySelectorAll('.fa-cart-plus').forEach(button => {
+            button.addEventListener('click', function() {
+                // Simple animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+                
+                // Update cart count (simplified)
+                const cartCount = document.querySelector('.fa-shopping-cart + span');
+                const currentCount = parseInt(cartCount.textContent);
+                cartCount.textContent = currentCount + 1;
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            const icon = this.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars';
+            } else {
+                icon.className = 'fas fa-times';
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile menu after clicking
+                if (window.innerWidth < 768) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+                }
+                
+                // Simple click effect
+                this.style.color = '#3b82f6';
+                setTimeout(() => {
+                    this.style.color = '';
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

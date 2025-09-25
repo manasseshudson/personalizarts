@@ -1,0 +1,42 @@
+<header class="bg-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-2">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center">
+                        <img src="./img/logo.png" alt="PersonalizArts" class="h-16 w-auto">
+                    </div>
+                    <nav class="hidden md:flex items-end space-x-6" style="margin-top: 35px;margin-left: 50px;">
+                        <a href="/" class="text-gray-700 hover:text-blue-600"><i class="fas fa-home mr-1"></i>Início</a>
+                        <a href="#products" class="text-gray-700 hover:text-blue-600"><i class="fas fa-box mr-1"></i>Produtos</a>
+						<a href="/grafica" class="text-gray-700 hover:text-blue-600"><i class="fas fa-box mr-1"></i>Gráfica</a>
+						<a href="#products" class="text-gray-700 hover:text-blue-600"><i class="fas fa-box mr-1"></i>Brindes</a>
+                        <a href="#featured" class="text-gray-700 hover:text-blue-600"><i class="fas fa-star mr-1"></i>Destaques</a>
+                        <a href="#contact" class="text-gray-700 hover:text-blue-600"><i class="fas fa-phone mr-1"></i>Contato</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-700 text-xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <!--
+                    <div class="relative">
+                        <i class="fas fa-shopping-cart text-gray-700 text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t hidden">
+            <div class="container mx-auto px-4 py-4">
+                <nav class="flex flex-col space-y-4">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 py-2"><i class="fas fa-home mr-2"></i>Início</a>
+                    <a href="#products" class="text-gray-700 hover:text-blue-600 py-2"><i class="fas fa-box mr-2"></i>Produtos</a>
+                    <a href="#featured" class="text-gray-700 hover:text-blue-600 py-2"><i class="fas fa-star mr-2"></i>Destaques</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 py-2"><i class="fas fa-phone mr-2"></i>Contato</a>
+                </nav>
+            </div>
+        </div>
+    </header>

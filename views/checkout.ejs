@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - PersonalizArts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        .checkout-step {
+            transition: all 0.3s ease;
+        }
+        .checkout-step.active {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .form-group {
+            transition: all 0.3s ease;
+        }
+        .form-group:focus-within {
+            transform: translateY(-2px);
+        }
+        .payment-method {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .payment-method:hover {
+            border-color: #3b82f6;
+        }
+        .payment-method.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+	<header class="bg-white shadow">
+		<div class="max-w-7xl mx-auto px-4">
+			<div class="flex justify-between items-center py-3">
+				<div class="flex items-center space-x-2">
+					<a href="/"><img src="./../../img/logo.png" alt="Logo" class="h-10"></a>
+				</div>
+				<%- include('./partials/topo.ejs') %>
+			</div>
+			<%- include('./partials/menu.ejs') %>
+	</header>
+    <!-- Breadcrumb -->
+    <section class="bg-gray-100 py-4">
+        <div class="container mx-auto px-4">
+            <!--<nav class="text-sm">
+                <a href="#" class="text-blue-600 hover:underline">Início</a>
+                <span class="mx-2">/</span>
+                <a href="#" class="text-blue-600 hover:underline">Carrinho</a>
+                <span class="mx-2">/</span>
+                <span class="text-gray-600">Checkout</span>
+            </nav>-->
+        </div>
+        
+    </section>
+
+    <!-- Checkout Progress 
+    <section class="py-6 bg-white border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center space-x-8">
+                <div class="checkout-step active flex items-center space-x-2 px-4 py-2 rounded-lg border-2">
+                    <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                    <span class="font-medium text-blue-600">Dados Pessoais</span>
+                </div>
+                <div class="w-8 h-1 bg-gray-300"></div>
+                <div class="checkout-step flex items-center space-x-2 px-4 py-2 rounded-lg border-2 border-gray-300">
+                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    <span class="font-medium text-gray-600">Pagamento</span>
+                </div>
+                <div class="w-8 h-1 bg-gray-300"></div>
+                <div class="checkout-step flex items-center space-x-2 px-4 py-2 rounded-lg border-2 border-gray-300">
+                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    <span class="font-medium text-gray-600">Confirmação</span>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    <!-- Checkout Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-8">
+                            <i class="fas fa-user mr-2 text-blue-600"></i>
+                            Dados Pessoais
+                        </h2>
+                        
+                        <form id="checkout-form">
+                            <!-- Personal Information -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
+                                    <input type="text" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="Digite seu nome completo">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">CPF *</label>
+                                    <input type="text" required id="cpf" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="000.000.000-00">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">E-mail *</label>
+                                    <input type="email" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="seu@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Telefone *</label>
+                                    <input type="tel" required id="phone" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="(11) 99999-9999">
+                                </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6">
+                                <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
+                                Endereço de Entrega
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+								<div class="mb-8">
+                                <label class="flex items-start space-x-3">
+                                    <input type="checkbox" id="retirar_pedido" class="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <span class="text-lg font-bold text-blue-600">
+                                        Irei Retirar o Pedido
+                                    </span>
+                                </label>
+                            </div>
+							</div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
+                                    <input type="text" id="cep" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="00000-000">
+                                </div>
+                                <div class="form-group md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Rua *</label>
+                                    <input type="text" id="rua" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="Nome da rua">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Número *</label>
+                                    <input type="text"  id="numero"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="123">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
+                                    <input type="text" id="complemento"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="Apto, Bloco">
+                                </div>
+                                <div class="form-group md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
+                                    <input type="text" id="bairro" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="Nome do bairro">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
+                                    <input type="text"  id="cidade" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="Nome da cidade">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Estado *</label>
+                                    <select  id="uf" 
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="">Selecione o estado</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="CE">Ceará</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6">
+                                <i class="fas fa-credit-card mr-2 text-blue-600"></i>
+                                Forma de Pagamento
+                            </h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="payment-method border-2 border-gray-300 rounded-lg p-4 text-center" onclick="selectPayment('credit')">
+                                    <i class="fas fa-credit-card text-2xl text-blue-600 mb-2"></i>
+                                    <p class="font-medium">Cartão de Crédito</p>
+                                    <!--<p class="text-sm text-gray-600">Até 12x sem juros</p>-->
+                                </div>
+                                <!--<div class="payment-method border-2 border-gray-300 rounded-lg p-4 text-center" onclick="selectPayment('debit')">
+                                    <i class="fas fa-money-check-alt text-2xl text-green-600 mb-2"></i>
+                                    <p class="font-medium">Cartão de Débito</p>
+                                    <p class="text-sm text-gray-600">À vista</p>
+                                </div>-->
+                                <div class="payment-method border-2 border-gray-300 rounded-lg p-4 text-center" onclick="selectPayment('pix')">
+                                    <i class="fas fa-qrcode text-2xl text-purple-600 mb-2"></i>
+                                    <p class="font-medium">PIX</p>
+                                    <!--<p class="text-sm text-gray-600">5% de desconto</p>-->
+                                </div>
+                            </div>
+
+                            <!-- Credit Card Form -->
+                            <div id="credit-card-form" class="hidden">
+                                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                                    <h4 class="font-semibold mb-4">Dados do Cartão</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Número do Cartão</label>
+                                            <input type="text" id="card-number" 
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="0000 0000 0000 0000">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Nome no Cartão</label>
+                                            <input type="text" 
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="Nome como no cartão">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Validade</label>
+                                            <input type="text" id="card-expiry" 
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="MM/AA">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">CVV</label>
+                                            <input type="text" id="card-cvv" 
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="123">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Parcelas</label>
+                                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                                <option>1x R$ 12,57 (à vista)</option>
+                                                <option>2x R$ 6,29 sem juros</option>
+                                                <option>3x R$ 4,19 sem juros</option>
+                                                <option>6x R$ 2,10 sem juros</option>
+                                                <option>12x R$ 1,26 (com juros)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PIX Form -->
+                            <div id="pix-form" class="hidden">
+                                <div class="bg-purple-50 p-6 rounded-lg mb-6 text-center">
+                                    <i class="fas fa-qrcode text-4xl text-purple-600 mb-4"></i>
+                                    <h4 class="font-semibold mb-2">Pagamento via PIX</h4>
+                                    <p class="text-gray-600 mb-4">Após finalizar o pedido, você receberá o código PIX para pagamento</p>
+                                    <div class="bg-green-100 text-green-800 p-3 rounded-lg inline-block">
+                                        <i class="fas fa-percentage mr-2"></i>
+                                        <strong>5% de desconto: R$ 11,94</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Terms -->
+                            <div class="mb-8">
+                                <label class="flex items-start space-x-3">
+                                    <input type="checkbox" required class="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <span class="text-sm text-gray-700">
+                                        Eu aceito os <a href="#" class="text-blue-600 hover:underline">termos de uso</a> 
+                                        e <a href="#" class="text-blue-600 hover:underline">política de privacidade</a>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 transition font-medium text-lg">
+                                <i class="fas fa-lock mr-2"></i>
+                                Finalizar Pedido
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Resumo do Pedido</h3>
+                        <% produtos.forEach(dados=> { %>
+                        <!-- Product Item -->
+                        <div class="flex items-center space-x-4 mb-6 pb-6 border-b">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2652/2652218.png" alt="" class="w-16 h-16 object-cover rounded-lg">
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-gray-800"><%= dados.titulo %></h4>
+                                <p class="text-sm text-gray-600">Quantidade: <%= qtde %></p>
+                                <p class="text-lg font-bold text-green-600">R$ <%= dados.valor %></p>
+                            </div>
+                        </div>
+                        <% }) %>
+                        <!-- Order Totals -->
+                        <div class="space-y-3 mb-6">
+                            <!--
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal:</span>
+                                <span class="font-medium">R$ <%= subtotal %></span>
+                            </div>
+                            
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Frete:</span>
+                                <span class="font-medium text-green-600">Grátis</span>
+                            </div>
+                            <div id="discount-line" class="flex justify-between hidden">
+                                <span class="text-gray-600">Desconto PIX (5%):</span>
+                                <span class="font-medium text-green-600">-R$ 0,63</span>
+                            </div>-->
+                            <div class="pt-3">
+                                <div class="flex justify-between text-lg font-bold">
+                                    <span>Total:</span>
+                                    <span id="total-price" class="text-green-600"><%= subtotal %></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Icons 
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex items-center justify-center space-x-4 text-gray-600">
+                                <div class="text-center">
+                                    <i class="fas fa-shield-alt text-xl mb-1"></i>
+                                    <p class="text-xs">Compra Segura</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-truck text-xl mb-1"></i>
+                                    <p class="text-xs">Entrega Rápida</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-undo text-xl mb-1"></i>
+                                    <p class="text-xs">Troca Fácil</p>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!-- Support Contact -->
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-gray-600 mb-2">Precisa de ajuda?</p>
+                            <div class="space-y-1">
+                                <p class="text-sm">
+                                    <i class="fas fa-phone mr-2 text-blue-600"></i>
+                                    (12) 98800-5619
+                                </p>
+                                <!--<p class="text-sm">
+                                    <i class="fas fa-envelope mr-2 text-blue-600"></i>
+                                    contato@personalizarts.com
+                                </p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="flex justify-center space-x-8 mb-4">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                    <i class="fab fa-ssl text-2xl"></i>
+                    <i class="fas fa-lock text-2xl"></i>
+                </div>
+                <p class="text-gray-400">© 2024 PersonalizArts. Compra 100% segura e protegida.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+		document.addEventListener("DOMContentLoaded", function () {
+			
+			const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+			//const produto = produtos.find(p => p.id_produto === id_produto);
+
+			console.log(produtos)
+			if (produtos) {
+				document.getElementById("quantidade").value = produtos.qtde;
+			}
+			
+			
+		});
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                const icon = this.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.className = 'fas fa-bars';
+                } else {
+                    icon.className = 'fas fa-times';
+                }
+            });
+        }
+
+        // Input masks
+        function maskCPF(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d)/, '$1.$2')
+                .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+                .replace(/(-\d{2})\d+?$/, '$1');
+        }
+
+        function maskPhone(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{2})(\d)/, '($1) $2')
+                .replace(/(\d{4})(\d)/, '$1-$2')
+                .replace(/(\d{4})-(\d)(\d{4})/, '$1$2-$3')
+                .replace(/(-\d{4})\d+?$/, '$1');
+        }
+
+        function maskCEP(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{5})(\d)/, '$1-$2')
+                .replace(/(-\d{3})\d+?$/, '$1');
+        }
+
+        function maskCardNumber(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{4})(\d)/, '$1 $2')
+                .replace(/(\d{4})(\d)/, '$1 $2')
+                .replace(/(\d{4})(\d)/, '$1 $2')
+                .replace(/(\d{4})\d+?$/, '$1');
+        }
+
+        function maskCardExpiry(value) {
+            return value
+                .replace(/\D/g, '')
+                .replace(/(\d{2})(\d)/, '$1/$2')
+                .replace(/(\d{2}\/\d{2})\d+?$/, '$1');
+        }
+
+        // Apply masks
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            e.target.value = maskCPF(e.target.value);
+        });
+
+        document.getElementById('phone').addEventListener('input', function(e) {
+            e.target.value = maskPhone(e.target.value);
+        });
+
+        document.getElementById('cep').addEventListener('input', function(e) {
+            e.target.value = maskCEP(e.target.value);
+        });
+
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            e.target.value = maskCardNumber(e.target.value);
+        });
+
+        document.getElementById('card-expiry').addEventListener('input', function(e) {
+            e.target.value = maskCardExpiry(e.target.value);
+        });
+
+        document.getElementById('card-cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+        });
+
+        // CEP lookup
+        document.getElementById('cep').addEventListener('blur', function(e) {
+            const cep = e.target.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('street').value = data.logradouro;
+                            document.getElementById('neighborhood').value = data.bairro;
+                            document.getElementById('city').value = data.localidade;
+                            document.getElementById('state').value = data.uf;
+                        }
+                    })
+                    .catch(error => console.log('Error:', error));
+            }
+        });
+
+        // Payment method selection
+        function selectPayment(method) {
+            // Remove active class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add active class to selected method
+            event.currentTarget.classList.add('selected');
+            
+            // Hide all payment forms
+            document.getElementById('credit-card-form').classList.add('hidden');
+            document.getElementById('pix-form').classList.add('hidden');
+            document.getElementById('discount-line').classList.add('hidden');
+            
+            // Show relevant payment form
+            if (method === 'credit' || method === 'debit') {
+                document.getElementById('credit-card-form').classList.remove('hidden');
+                document.getElementById('total-price').textContent = 'R$ 12,57';
+            } else if (method === 'pix') {
+                document.getElementById('pix-form').classList.remove('hidden');
+                document.getElementById('discount-line').classList.remove('hidden');
+                document.getElementById('total-price').textContent = 'R$ 11,94';
+            }
+        }
+		const checkbox = document.getElementById('retirar_pedido');
+		const inputs = [document.getElementById("cep"), document.getElementById("rua"),document.getElementById("bairro"),document.getElementById("cidade"),document.getElementById("uf"),document.getElementById("numero"),document.getElementById("complemento")];
+		
+		checkbox.addEventListener("change", function () {
+			inputs.forEach(input => {
+				input.disabled = this.checked; // se marcado -> desabilita
+			});
+		});
+  
+  
+  
+		
+		
+        // Form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+			
+            e.preventDefault();
+            
+			/*
+			let Nome="Manasses Hdson";
+			let	CPF="052.343.456-10";
+			let	Email"="manasseshudson@gmail.com";
+			let	Telefone"="(32)99148-7863";
+			let	Cep"="36046-280";
+			let	Rua"="Qudeluz";
+			let	Numero"="310";
+			let	Complemento"="";
+			let	Bairro"="Eldorado";
+			let	Cidade"="Juiz de Fora";
+			let	Uf"="MG";
+			let	Produto"="Kit Caixa MDF Personalizada com Caderno Kraft + Caneta Touch Personalizada + 2 Copos de Fibra de Bambu";
+			let	Qtde"="5";
+			let	Valor"="324,50";
+			*/
+			
+			//https://n8n.centralatende.com.br/webhook/987040af-1c1f-48a2-9f61-f0c2dbdc5416
+			
+			
+			
+			const url = "https://n8n.centralatende.com.br/webhook/987040af-1c1f-48a2-9f61-f0c2dbdc5416";
+
+			const data = {
+				  Nome: "Manasses Hdson",
+				  CPF: "052.343.456-10",
+				  Email: "manasseshudson@gmail.com",
+				  Telefone: "(32)99148-7863",
+				  Cep: "36046-280",
+				  Rua: "Qudeluz",
+				  Numero: "310",
+				  Complemento: "",
+				  Bairro: "Eldorado",
+				  Cidade: "Juiz de Fora",
+				  Uf: "MG",
+				  Produto: "Kit Caixa MDF Personalizada com Caderno Kraft + Caneta Touch Personalizada + 2 Copos de Fibra de Bambu",
+				  Qtde: "5",
+				  Valor: "324,50"
+			};
+
+			fetch(url, {
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json"
+			  },
+			  body: JSON.stringify(data)
+			})
+			  .then(response => response.json())
+			  .then(result => console.log("Sucesso:", result))
+			  .catch(error => console.error("Erro:", error));
+
+			
+            // Simple validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-red-500');
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+            
+            if (isValid) {
+                // Show success message
+                alert('Pedido realizado com sucesso! Você receberá um e-mail de confirmação.');
+                
+                // In a real application, you would submit the form data to your server
+                console.log('Form submitted successfully');
+            } else {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+            }
+        });
+    </script>
+</body>
+</html>

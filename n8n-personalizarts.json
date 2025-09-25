@@ -1,0 +1,112 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Pessoal",
+        "remoteJid": "+5532991487863",
+        "messageText": "=Pedido Realizado no Site : *Personalizarts*\n\n\n*Nome :*        {{ $json.body.Nome }}\n*CPF  :*        {{ $json.body.CPF }}\n*Email:*        {{ $json.body.Email }}\n*Telefone:*     {{ $json.body.Telefone }}\n*Cep:*          {{ $json.body.Cep }}\n*Rua:*          {{ $json.body.Rua }}\n*Numero:*       {{ $json.body.Numero }}\n*Complemento :* {{ $json.body.Complemento }}\n*Bairro:*       {{ $json.body.Bairro }}\n*Cidade:*       {{ $json.body.Cidade }}\n*UF:*           {{ $json.body.Uf }}\n\n*Produto :*     {{ $json.body.Produto }}\n\n*Qtde  :*      {{ $json.body.Qtde }}\n*Valor :*      {{ $json.body.Valor }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b7e17240-b8c6-4d64-8e9e-0da42b6d54a4",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "2kZjBRSuC2hhsAeB",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "987040af-1c1f-48a2-9f61-f0c2dbdc5416",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "da8de483-0bde-4074-bb73-922e7dbac5b5",
+      "name": "Receber do Formulario",
+      "webhookId": "987040af-1c1f-48a2-9f61-f0c2dbdc5416"
+    }
+  ],
+  "pinData": {
+    "Receber do Formulario": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.centralatende.com.br",
+            "user-agent": "PostmanRuntime/7.46.1",
+            "content-length": "461",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br",
+            "cache-control": "no-cache",
+            "content-type": "application/json",
+            "postman-token": "e46726e3-fff1-420e-b774-aeb3a8f2c0f5",
+            "x-forwarded-for": "54.86.50.139",
+            "x-forwarded-host": "n8n.centralatende.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "7d9a068a4bb6",
+            "x-real-ip": "54.86.50.139"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "Nome": "Manasses Hdson",
+            "CPF": "052.343.456-10",
+            "Email": "manasseshudson@gmail.com",
+            "Telefone": "(32)99148-7863",
+            "Cep": "36046-280",
+            "Rua": "Qudeluz",
+            "Numero": "310",
+            "Complemento": "",
+            "Bairro": "Eldorado",
+            "Cidade": "Juiz de Fora",
+            "Uf": "MG",
+            "Produto": "Kit Caixa MDF Personalizada com Caderno Kraft + Caneta Touch Personalizada + 2 Copos de Fibra de Bambu",
+            "Qtde": "5",
+            "Valor": "324,50"
+          },
+          "webhookUrl": "https://n8n.centralatende.com.br/webhook-test/987040af-1c1f-48a2-9f61-f0c2dbdc5416",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Receber do Formulario": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a62b4e7c-e8d7-4d5c-84e8-3ad9db618aa2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "779c182f4467757c701a9b1e94fb1dc425b1bec4c6fef18377707b7180ff9e77"
+  },
+  "id": "FDcxnAotK5KXCm4c",
+  "tags": []
+}
