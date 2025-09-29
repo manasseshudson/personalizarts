@@ -54,7 +54,7 @@ app.get('/', (req,res)=>{
         //console.log(produtos);
 		
 		produtos.forEach(prods=> {
-			console.log(prods.imagem_principal)
+			//console.log(prods.imagem_principal)
 		})
 		
         res.render('index',{
@@ -207,3 +207,57 @@ app.get('/integration',(req,res)=>{
 	
 })
 
+
+app.post('/pedidos',async (req,res)=>{
+	const {nome,cpf,email,telefone,cep,rua,numero,complemento,bairro,cidade,uf,id_produto,descricao_produto, qtde_produto, valor_produto, total_produto, forma_pagto, envio } = req.body;
+	
+	console.log(nome);
+	console.log(cpf);
+	console.log(email);
+	console.log(telefone);
+	console.log(cep);
+	console.log(rua);
+	console.log(numero);
+	console.log(complemento);
+	console.log(bairro);
+	console.log(cidade);
+	console.log(uf);
+	console.log(id_produto);
+	console.log(descricao_produto);
+	console.log(qtde_produto);
+	console.log(valor_produto);
+	console.log(total_produto);
+	console.log(forma_pagto);
+	console.log(envio);
+	
+	try{
+		const pedidos = await knex('pedidos').insert({
+			nome,
+			cpf,
+			email,
+			telefone,
+			cep,
+			rua,
+			numero,
+			complemento,
+			bairro,
+			cidade,
+			uf,
+			id_produto,
+			descricao_produto,
+			qtde_produto,
+			valor_produto,
+			total_produto,
+			forma_pagto,
+			envio
+		});
+		
+		res.status(200).json({ mensagem: "Pedido realizado com sucesso." });
+	}catch(error){
+		console.error("Erro ao inserir produto:", err);
+		res.status(500).json({ erro: "Erro no servidor" });
+		
+	}
+	
+	
+})

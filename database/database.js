@@ -20,7 +20,7 @@ const knex = require('knex')({
     user : 'personalizarts',
     password : 'qwer0987',
     database : 'personalizarts'
-  },debug: true
+  },debug: false
 });
 
 module.exports = knex;
