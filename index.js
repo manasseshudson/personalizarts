@@ -49,7 +49,7 @@ app.get('/', (req,res)=>{
 	//.leftJoin('tb_imagens','tb_imagens.id_produto','tb_produto.id')
 	.select()
     //.where({pagina_principal: 1})
-    //.limit(4)
+    .limit(4)
 	.then(produtos=>{
         //console.log(produtos);
 		
@@ -65,6 +65,52 @@ app.get('/', (req,res)=>{
 	//res.render('index')
 })
 
+
+app.get('/brindes', (req,res)=>{ 
+
+    knex('tb_produto')
+	//.leftJoin('tb_imagens','tb_imagens.id_produto','tb_produto.id')
+	.select()
+    .where({categoria: 'brindes'})
+    .limit(4)
+	.then(produtos=>{
+        //console.log(produtos);
+		
+		produtos.forEach(prods=> {
+			//console.log(prods.imagem_principal)
+		})
+		
+        res.render('brindes',{
+            produtos: produtos
+        })    
+    })
+    
+	//res.render('index')
+})
+
+
+app.get('/grafica', (req,res)=>{ 
+
+    knex('tb_produto')
+	//.leftJoin('tb_imagens','tb_imagens.id_produto','tb_produto.id')
+	.select()
+    .where({categoria: 'grafica'})
+    .limit(4)
+	.then(produtos=>{
+        //console.log(produtos);
+		
+		produtos.forEach(prods=> {
+			//console.log(prods.imagem_principal)
+		})
+		
+        res.render('grafica',{
+            produtos: produtos
+        })    
+    })
+    
+	//res.render('index')
+})
+
 app.get('/admin', (req,res)=>{ 
 
         res.render('/admin')
@@ -72,21 +118,6 @@ app.get('/admin', (req,res)=>{
 	//res.render('index')
 })
 
-app.get('/grafica', (req,res)=>{ 
-
-    knex('tb_produto')
-	.leftJoin('tb_imagens','tb_imagens.id_produto','tb_produto.id')
-	.where({tipo: 'Grafica'})
-    .select('tb_produto.id','tb_imagens.imagem','tb_produto.valor','tb_produto.titulo')
-    .limit(4).then(produtos=>{
-        console.log(produtos);
-        res.render('grafica',{
-			produtos: produtos
-        })    
-    })
-    
-	//res.render('index')
-})
 
 
 app.get('/produto/:id', async (req, res) => {
@@ -189,8 +220,8 @@ app.post("/produto", async (req, res) => {
 });
 
 
-app.listen( process.env.PORT,()=>{
-	console.log('Api Rodando porta  '+process.env.PORT)
+app.listen( 3000,()=>{
+	console.log('Api Rodando porta  3000')
 })
 
 app.get('/integration',(req,res)=>{
