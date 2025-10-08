@@ -10,8 +10,6 @@ const uid2 = require('uid2');
 const path = require('path');
 const cors = require('cors');
 
-const { Client } = require('@notionhq/client');
-
 
 require('dotenv').config();
 app.use(cors());
@@ -198,18 +196,32 @@ app.get('/checkout/:id_produto/:qtde', async (req, res) => {
 // Rota para cadastrar produto
 app.post("/produto", async (req, res) => {
   try {
-    const { titulo, descricao, valor, observacao, lancamentos } = req.body;
+    const { titulo, descricao, valor, observacao, lancamentos, grafica, brindes } = req.body;
 
     if (!titulo || !valor) {
       return res.status(400).json({ erro: "Título e valor são obrigatórios!" });
     }
 
+	let categoria ="";
+	
+	console.log(brindes)
+	
+	if(grafica==true){
+		categoria="grafica";
+	}
+	if(brindes==true){
+		categoria="brindes";
+	}
+	
+	
     const [id] = await knex("tb_produto").insert({
       titulo,
       descricao,
       valor,
       observacao,
-	  lancamentos: 1
+	  lancamentos: 1,
+	  categoria
+	  
     });
 
     res.json({ sucesso: true, id });
@@ -224,19 +236,6 @@ app.listen( 3000,()=>{
 	console.log('Api Rodando porta  3000')
 })
 
-app.get('/integration',(req,res)=>{
-	
-	const notion = new Client({ auth: process.env.NOTION_API_KEY });
-
-	(async () => {
-		const blockId = '2741c8683648804d8d9fd412aa418f6a';
-		const response = await notion.blocks.retrieve({
-			block_id: blockId,
-		});
-		console.log(response);
-	})();
-	
-})
 
 
 app.post('/pedidos',async (req,res)=>{

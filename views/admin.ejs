@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
-<img src="'https://prod-files-secure.s3.us-west-2.amazonaws.com/6a2ed568-9e1a-4cfe-a573-2d6be35b72c6/4e2a2429-2661-4609-91e4-5758c0509818/1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Z236UJ5K%2F20250920%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250920T104649Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHIaCXVzLXdlc3QtMiJHMEUCIE%2BUMLj6SuToOk1wYT973HdzmXkOFmpter9P9N2i7DLiAiEA%2BKgtBdSfpIW9EADYoxZLhVgqq%2Fjch2XUd1OsQoLeLHoqiAQI6%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDLs%2BflgcPUvGED7E1CrcA9eLMo%2FvZUnc1uHTkAuw2sW77vGd3iIsODuJhYyIA2qn1LLLdftF%2BiNdU%2Bs%2BTWVdoFcqUwWETnsid9gyKmzSLVVVTj6c2%2FZgbyITPJx4brYCjc9VfUB5AIbXR6oZXDhotbwzxy19QbqAVQWeLk2KmuIT1fmY3qRX8brPsvrlG2%2B28HC3MGR8G2wPlseqC%2FMlk%2FvbdEDbYi8n1Z8urWi%2FDLIt4jqrQdq0gYYpbH6T3dRKKHsnvkpQPLhEslzHrScpJh9HrEUY5nkU2kzXrq8UZKlQ%2Fv5Itc2gmOT9I1xvYhDCZNzNJwrSh9jlImq3qiAbuuVH4WRdKR%2Fjw6xel6fOB4Rai9ISA8AYlIDspmH4FBRSnemSVATylp0h7%2Bu7oziDHyD7BgjFSBfJ2O5AAutySSMVPPJAHk2IIBBehmzBXmmu4TDVjZNkTxcypFIfCxaDwtDkJg0FhcJa0wsNlWDoyFetPTq%2FLuxAwRKAfhUZTYahszG0RrqAwPF%2BQYiavErryvHEMfxm7%2B4sfPxJq88VJ%2FEqzmRTyrPZPqVsgWMTOx4IsuqKDAZu6OdX7wM7S9HYLb8JkWCvEpG7Dkv6brjE8x4mmOd5folLLIA2fAX35SOgVRTHwZs6DDpVJrYFMLzpucYGOqUB61JpNRrW4AbHcbeaw42eC07%2BMpzeKGexGpojIkmtVaPJIXU4IQxklDZl1xXZOjIVAfy7a6bM%2BBnzwfrfHhSs7%2BEQwVIoUrWowPHdhW43SIhYmEBLYn8yw6ftRF3LiqEHCA6EAQtZdmJ3%2Bf4BKbhUT9Dfz9ZwZ3vwcP4q1VG5hiaMkeHuNI0g%2BMSbxOhkXauv72rbo9yCWP4I%2Bmy57Ic7I9v0PZiK&X-Amz-Signature=0ac7a5df06c743df3b9da69a275758f3ae0480d159f48c08baf91bce7f0f2637&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"> 
 
 
  <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6">
@@ -27,27 +26,24 @@
 	<textarea id="observacao" placeholder="Observação" rows="3"
         class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
 
+
+		<!-- NOVOS CHECKBOXES -->
+		<div class="flex space-x-6 items-center">
+		  <label class="flex items-center space-x-2">
+			<input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" id="grafica">
+			<span class="text-gray-700">Gráfica</span>
+		  </label>
+		  <label class="flex items-center space-x-2">
+			<input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" id="brindes">
+			<span class="text-gray-700">Brindes</span>
+		  </label>
+		</div>
+	
       <button type="submit" 
         class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
         Cadastrar Produto
       </button>
     </form>
-
-    <!-- Tabela de produtos -->
-    <div class="mt-6">
-      <h2 class="text-xl font-semibold mb-2 text-gray-700">Produtos Cadastrados</h2>
-      <table class="w-full border-collapse border border-gray-300">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="border p-2">Título</th>
-            <th class="border p-2">Descrição</th>
-            <th class="border p-2">Valor</th>
-            <th class="border p-2">Observação</th>
-          </tr>
-        </thead>
-        <tbody id="listaProdutos" class="text-center"></tbody>
-      </table>
-    </div>
   </div>
 
   <script>
@@ -58,51 +54,24 @@
 		}
 	  });
   
-    const API_URL = "http://localhost:3005"; // sua API Node.js
+    const API_URL = "http://localhost:3000"; // sua API Node.js
 
     const form = document.getElementById("formProduto");
     const lista = document.getElementById("listaProdutos");
-
-    // Função para carregar produtos
-    async function carregarProdutos() {
-      lista.innerHTML = "<tr><td colspan='4' class='p-2'>Carregando...</td></tr>";
-
-      try {
-        const resposta = await fetch(`${API_URL}/produtos`);
-        const produtos = await resposta.json();
-
-        lista.innerHTML = "";
-
-        if (produtos.length === 0) {
-          lista.innerHTML = "<tr><td colspan='4' class='p-2'>Nenhum produto cadastrado</td></tr>";
-          return;
-        }
-
-        produtos.forEach(p => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td class="border p-2">${p.titulo}</td>
-            <td class="border p-2">${p.descricao || ""}</td>
-            <td class="border p-2">R$ ${parseFloat(p.valor).toFixed(2)}</td>
-            <td class="border p-2">${p.observacao || ""}</td>
-          `;
-          lista.appendChild(tr);
-        });
-      } catch (err) {
-        console.error("Erro ao carregar produtos:", err);
-        lista.innerHTML = "<tr><td colspan='4' class='p-2 text-red-500'>Erro ao carregar</td></tr>";
-      }
-    }
 
     // Cadastro de produto
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
 
+	
+		
       const produto = {
         titulo: document.getElementById("titulo").value.trim(),
         descricao: document.getElementById("descricao").value.trim(),
         valor: document.getElementById("valor").value.trim(),
         observacao: document.getElementById("observacao").value.trim(),
+		grafica: document.getElementById('grafica').checked, // true / false
+		brindes: document.getElementById('brindes').checked,  // true / false
 		lancamentos: 1
       };
 
@@ -122,8 +91,8 @@
 
         if (data.sucesso) {
           alert("Produto cadastrado com sucesso!");
-          form.reset();
-          carregarProdutos();
+          //form.reset();
+          //carregarProdutos();
         } else {
           alert("Erro: " + data.erro);
         }
@@ -134,7 +103,21 @@
     });
 
     // Carregar produtos ao abrir a página
-    carregarProdutos();
+    //carregarProdutos();
   </script>
+  <script>
+const grafica = document.getElementById('grafica');
+const brindes = document.getElementById('brindes');
+
+// quando marcar "Gráfica", desmarca "Brindes"
+grafica.addEventListener('change', () => {
+  if (grafica.checked) brindes.checked = false;
+});
+
+// quando marcar "Brindes", desmarca "Gráfica"
+brindes.addEventListener('change', () => {
+  if (brindes.checked) grafica.checked = false;
+});
+</script>
 </body>
 </html>
