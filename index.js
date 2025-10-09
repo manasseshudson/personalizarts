@@ -148,6 +148,7 @@ app.get('/produto/:id', async (req, res) => {
             titulo: produto.titulo,
             valor: produto.valor,
             descricao: produto.descricao,
+			observacao: produto.observacao,
             imagens,
             imagem_principal : imagem_principal_
         });
